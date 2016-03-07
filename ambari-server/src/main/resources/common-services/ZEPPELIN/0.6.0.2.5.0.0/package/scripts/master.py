@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 """
 Licensed to the Apache Software Foundation (ASF) under one
 or more contributor license agreements.  See the NOTICE file
@@ -7,7 +8,7 @@ to you under the Apache License, Version 2.0 (the
 "License"); you may not use this file except in compliance
 with the License.  You may obtain a copy of the License at
 
-  http://www.apache.org/licenses/LICENSE-2.0
+    http://www.apache.org/licenses/LICENSE-2.0
 
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,14 +16,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-Ambari Agent
-
 """
 
 import glob
 import grp
 import os
-import platform
 import pwd
 import sys
 from resource_management.core.resources import Directory
@@ -56,16 +54,9 @@ class Master(Script):
     Directory([params.zeppelin_pid_dir, params.zeppelin_log_dir, params.zeppelin_dir],
               owner=params.zeppelin_user,
               group=params.zeppelin_group,
-              cd_access = "a",
-              mode = 0755
+              cd_access="a",
+              mode=0755
               )
-
-    File(params.zeppelin_log_file,
-         mode=0644,
-         owner=params.zeppelin_user,
-         group=params.zeppelin_group,
-         content=''
-         )
 
     Execute('echo spark_version:' + params.spark_version + ' detected for spark_home: '
             + params.spark_home + ' >> ' + params.zeppelin_log_file)
@@ -79,10 +70,6 @@ class Master(Script):
                    "{zeppelin_host} {zeppelin_port} {setup_view} {service_packagedir} "
                    "{java64_home} >> {zeppelin_log_file}"),
             user=params.zeppelin_user)
-
-    # Execute('cp ' + params.zeppelin_dir
-    #         + '/interpreter/spark/dep/zeppelin-spark-dependencies-*.jar /tmp',
-    #         user=params.zeppelin_user)
 
   def create_linux_user(self, user, group):
     try:
@@ -117,41 +104,10 @@ class Master(Script):
                         recursive_chmod=True
                         )
     params.HdfsResource(None, action="execute")
-    #Execute('hadoop fs -mkdir -p /user/' + params.zeppelin_user, user='hdfs', ignore_failures=True)
-    #Execute('hadoop fs -chown ' + params.zeppelin_user + ' /user/' + params.zeppelin_user, user='hdfs')
-    #Execute('hadoop fs -chgrp ' + params.zeppelin_user + ' /user/' + params.zeppelin_user, user='hdfs')
-
-    #Execute('hadoop fs -mkdir -p ' + params.spark_jar_dir, user='hdfs', ignore_failures=True)
-    #Execute('hadoop fs -chown ' + params.zeppelin_user + ' ' + params.spark_jar_dir, user='hdfs')
-    #Execute('hadoop fs -chgrp ' + params.zeppelin_user + ' ' + params.spark_jar_dir, user='hdfs')
 
     Execute(
       'hadoop fs -put -f ' + params.zeppelin_dir + '/interpreter/spark/dep/zeppelin-spark-dependencies-*.jar ' + params.spark_jar_dir,
       user=params.zeppelin_user, ignore_failures=True)
-
-
-    # params.HdfsResource(params.spark_jar_dir,
-    #                     type="directory",
-    #                     action="create_on_execute",
-    #                     owner=params.zeppelin_user,
-    #                     group=params.zeppelin_user,
-    #                     mode=0700,
-    #                     recursive_chown=True,
-    #                     recursive_chmod=True
-    #                     )
-    # source_file = params.zeppelin_dir + 'interpreter/spark/dep/zeppelin-spark-dependencies-*.jar'
-    # dest_file = params.spark_jar_dir
-    # params.HdfsResource(dest_file,
-    #                     type="file",
-    #                     action="create_on_execute",
-    #                     source=source_file,
-    #                     group=params.zeppelin_user,
-    #                     owner=params.zeppelin_user,
-    #                     mode=0444,
-    #                     )
-    # params.HdfsResource(None, action="execute")
-    # print('Will attempt to copy {0} tarball from {1} to DFS at {2}.'
-    #       .format('zeppelin-spark-dependencies-*.jar', source_file, dest_file))
 
   def configure(self, env):
     import params
@@ -184,10 +140,7 @@ class Master(Script):
     if glob.glob(
             params.zeppelin_dir + '/interpreter/spark/dep/zeppelin-spark-dependencies-*.jar') and os.path.exists(
       glob.glob(params.zeppelin_dir + '/interpreter/spark/dep/zeppelin-spark-dependencies-*.jar')[0]):
-
-      #if len(glob.glob(params.zeppelin_dir + '/isFirstTime')) == 0:
       self.create_hdfs_user(params)
-      #  Execute('touch ' + params.zeppelin_dir + '/isFirstTime')
 
     Execute(params.zeppelin_dir + '/bin/zeppelin-daemon.sh start >> '
             + params.zeppelin_log_file, user=params.zeppelin_user)
