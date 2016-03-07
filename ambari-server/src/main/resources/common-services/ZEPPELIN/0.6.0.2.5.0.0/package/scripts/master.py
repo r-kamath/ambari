@@ -103,11 +103,21 @@ class Master(Script):
                         recursive_chown=True,
                         recursive_chmod=True
                         )
-    params.HdfsResource(None, action="execute")
 
-    Execute(
-      'hadoop fs -put -f ' + params.zeppelin_dir + '/interpreter/spark/dep/zeppelin-spark-dependencies-*.jar ' + params.spark_jar_dir,
-      user=params.zeppelin_user, ignore_failures=True)
+    spark_deps_full_path = glob.glob(params.zeppelin_dir + '/interpreter/spark/dep/zeppelin-spark-dependencies-*.jar')[0]
+    spark_dep_file_name = os.path.basename(spark_deps_full_path);
+
+    params.HdfsResource(params.spark_jar_dir + "/" + spark_dep_file_name,
+                        type="file",
+                        action="create_on_execute",
+                        source=spark_deps_full_path,
+                        group=params.zeppelin_group,
+                        owner=params.zeppelin_user,
+                        mode=0444,
+                        replace_existing_files=True,
+                        )
+
+    params.HdfsResource(None, action="execute")
 
   def configure(self, env):
     import params
