@@ -81,6 +81,9 @@ limitations under the License.
               <name>python-devel</name>
             </package>
             <package>
+              <name>epel-release</name>
+            </package>
+            <package>
               <name>python-pip</name>
             </package>
             <package>
