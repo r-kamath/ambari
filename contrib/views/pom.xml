@@ -42,6 +42,7 @@
     <module>tez</module>
     <module>utils</module>
     <module>storm</module>
+    <module>zeppelin</module>
   </modules>
   <build>
     <pluginManagement>
