@@ -51,20 +51,6 @@ SetupZeppelin () {
 
   rm -rf notebook/*
 
-  #clean old notebooks
-  if [ -d "notebook/2AHFKRNDZ" ]; then
-    rm -rf notebook/2AHFKRNDZ
-  fi
-
-  if [ -d "notebook/2AK7D7JNE" ]; then
-    rm -rf notebook/2AK7D7JNE
-  fi
-
-
-  if [ -d "notebook/2A94M5J1Z" ]; then
-    rm -rf notebook/2A94M5J1Z
-  fi
-
   if [ "$HIVE_METASTORE_HOST" != "0.0.0.0" ]
   then
     echo "Hive metastore detected: $HIVE_METASTORE_HOST. Setting up conf/hive-site.xml"
@@ -99,30 +85,6 @@ SetupZeppelin () {
   else
     echo "Skipping import of sample notebooks"
   fi
-
-
-  #setup view
-  echo "Compiling Zeppelin view..."
-  cd
-  if [ -d iframe-view ]
-  then
-    rm -rf iframe-view
-  fi
-  if [ -d zeppelin-view ]
-  then
-    rm -rf zeppelin-view
-  fi
-
-  #if [[ $SETUP_VIEW == "true" ]]
-  #then
-  #  cp $PACKAGE_DIR/scripts/zeppelin-view-1.0-SNAPSHOT.jar .
-  #  $java64_home/bin/jar xf zeppelin-view-1.0-SNAPSHOT.jar index.html
-  #  sed -i "s/HOST_NAME:HOST_PORT/$ZEPPELIN_HOST:$ZEPPELIN_PORT/g" index.html
-  #  $java64_home/bin/jar uf zeppelin-view-1.0-SNAPSHOT.jar index.html
-  #else
-  #  echo "Skipping setup of Ambari view"
-  #fi
-  #echo "Skipping setup of Ambari view"
 
 }
 

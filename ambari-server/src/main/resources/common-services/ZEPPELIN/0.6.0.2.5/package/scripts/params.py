@@ -52,22 +52,26 @@ executor_mem = config['configurations']['zeppelin-env']['zeppelin.executor.mem']
 executor_instances = config['configurations']['zeppelin-env'][
   'zeppelin.executor.instances']
 
-# disable option to build zeppelin from source for the TP
-setup_prebuilt = config['configurations']['zeppelin-env']['zeppelin.setup.prebuilt']
-# setup_prebuilt = 'true'
-
 spark_jar_dir = config['configurations']['zeppelin-env']['zeppelin.spark.jar.dir']
 spark_jar = format("{spark_jar_dir}/zeppelin-spark-0.5.5-SNAPSHOT.jar")
 setup_view = True
 temp_file = config['configurations']['zeppelin-env']['zeppelin.temp.file']
 spark_home = "/usr/hdp/current/spark-client/"
-zeppelin_host = config['configurations']['zeppelin-env']['zeppelin.host.publicname']
 install_python_packages = config['configurations']['zeppelin-env'][
   'zeppelin.install_python_packages']
 
 try:
   fline = open(spark_home + "/RELEASE").readline().rstrip()
   spark_version = re.search('Spark (\d\.\d).+', fline).group(1)
+  print("=================================================")
+  print("=================================================")
+  print("=================================================")
+  print(get_hdp_version('spark-client'))
+  print("=================================================")
+  print(spark_version)
+  print("=================================================")
+  print("=================================================")
+  print("=================================================")
 except:
   pass
 
@@ -93,7 +97,7 @@ zeppelin_env_content = config['configurations']['zeppelin-env']['content']
 master_configs = config['clusterHostInfo']
 java64_home = config['hostLevelParams']['java_home']
 ambari_host = str(master_configs['ambari_server_host'][0])
-zeppelin_internalhost = str(master_configs['zeppelin_master_hosts'][0])
+zeppelin_host = str(master_configs['zeppelin_master_hosts'][0])
 
 # detect HS2 details, if installed
 
@@ -122,10 +126,6 @@ if 'spark.yarn.queue' in config['configurations']['spark-defaults']:
   spark_queue = config['configurations']['spark-defaults']['spark.yarn.queue']
 else:
   spark_queue = 'default'
-
-# if user did not specify public hostname of zeppelin node, proceed with internal name instead
-if zeppelin_host.strip() == '':
-  zeppelin_host = zeppelin_internalhost
 
 # e.g. 2.3
 stack_version_unformatted = str(config['hostLevelParams']['stack_version'])

@@ -31,16 +31,12 @@ from resource_management.libraries.functions.check_process_status import check_p
 from resource_management.libraries.functions.format import format
 from resource_management.libraries.script.script import Script
 
-reload(sys)
-sys.setdefaultencoding('utf8')
-
-
 class Master(Script):
   def install(self, env):
     import params
     env.set_params(params)
 
-    Execute('find ' + params.service_packagedir + ' -iname "*.sh" | xargs chmod +x')
+    Execute('chmod +x ' + params.service_packagedir + "/scripts/setup_snapshot.sh")
 
     # Create user and group if they don't exist
     self.create_linux_user(params.zeppelin_user, params.zeppelin_group)
@@ -59,7 +55,7 @@ class Master(Script):
               )
 
     Execute('echo spark_version:' + params.spark_version + ' detected for spark_home: '
-            + params.spark_home + ' >> ' + params.zeppelin_log_file)
+            + params.spark_home + ' >> ' + params.zeppelin_log_file, user=params.zeppelin_user)
 
     # update the configs specified by user
     self.configure(env)
@@ -81,7 +77,7 @@ class Master(Script):
     except KeyError:
       Execute('groupadd ' + group)
 
-  def create_hdfs_user(self, params):
+  def create_zeppelin_dir(self, params):
     params.HdfsResource(format("/user/{zeppelin_user}"),
                         type="directory",
                         action="create_on_execute",
@@ -150,7 +146,7 @@ class Master(Script):
     if glob.glob(
             params.zeppelin_dir + '/interpreter/spark/dep/zeppelin-spark-dependencies-*.jar') and os.path.exists(
       glob.glob(params.zeppelin_dir + '/interpreter/spark/dep/zeppelin-spark-dependencies-*.jar')[0]):
-      self.create_hdfs_user(params)
+      self.create_zeppelin_dir(params)
 
     Execute(params.zeppelin_dir + '/bin/zeppelin-daemon.sh start >> '
             + params.zeppelin_log_file, user=params.zeppelin_user)

@@ -142,14 +142,6 @@ export SPARK_YARN_USER_ENV="PYTHONPATH=${PYTHONPATH}"
   </property>
 
   <property>
-    <name>zeppelin.setup.prebuilt</name>
-    <value>true</value>
-    <description>If true, will download previously built package (instead of building from
-      source). To compile from source instead, set to false.
-    </description>
-  </property>
-
-  <property>
     <name>zeppelin.executor.mem</name>
     <value>512m</value>
     <description>Executor memory to use (e.g. 512m or 1g)</description>
@@ -166,19 +158,6 @@ export SPARK_YARN_USER_ENV="PYTHONPATH=${PYTHONPATH}"
     <value>/apps/zeppelin</value>
     <description>Shared location where zeppelin spark jar will be copied to. Should be accesible
       by all cluster nodes
-    </description>
-  </property>
-
-  <property>
-    <name>zeppelin.host.publicname</name>
-    <value> </value>
-    <description>This is used to setup the Ambari view for Zeppelin. Set this to the public
-      host/IP of zeppelin node (which must must be reachable from your local machine). If
-      installing on sandbox (or local VM), change this to the IP address of VM.
-      If installing on cloud, set this to public name/IP of zeppelin node. Alternatively, if
-      you already have a local hosts file entry for the internal hostname of the zeppelin node
-      (e.g. sandbox.hortonworks.com), you can leave this empty - it will default to internal
-      hostname
     </description>
   </property>
 
