@@ -160,13 +160,5 @@ export SPARK_YARN_USER_ENV="PYTHONPATH=${PYTHONPATH}"
       by all cluster nodes
     </description>
   </property>
-
-  <property>
-    <name>zeppelin.install_python_packages</name>
-    <value>false</value>
-    <description>(Optional) (CentOS only) Whether to install python packages for pyspark.
-      Installs numpy scipy pandas scikit-learn
-    </description>
-  </property>
  
 </configuration>

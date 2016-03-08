@@ -50,11 +50,7 @@ public class ZeppelinServlet extends HttpServlet {
 
         String port = viewContext.getProperties().get("zeppelin.server.port");
         String publicName = viewContext.getProperties().get("zeppelin.host.publicname");
-
-        LOG.error("S1==" + port);
-        LOG.error("ss1==" + publicName);
         request.setAttribute("port", port);
-        request.setAttribute("publicname", publicName);
 
         request.getRequestDispatcher("WEB-INF/index.jsp").forward(request, response);
     }

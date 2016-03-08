@@ -57,8 +57,6 @@ spark_jar = format("{spark_jar_dir}/zeppelin-spark-0.5.5-SNAPSHOT.jar")
 setup_view = True
 temp_file = config['configurations']['zeppelin-env']['zeppelin.temp.file']
 spark_home = "/usr/hdp/current/spark-client/"
-install_python_packages = config['configurations']['zeppelin-env'][
-  'zeppelin.install_python_packages']
 
 try:
   fline = open(spark_home + "/RELEASE").readline().rstrip()

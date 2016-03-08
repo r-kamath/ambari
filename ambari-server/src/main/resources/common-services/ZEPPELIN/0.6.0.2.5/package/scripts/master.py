@@ -41,8 +41,6 @@ class Master(Script):
     # Create user and group if they don't exist
     self.create_linux_user(params.zeppelin_user, params.zeppelin_group)
     self.install_packages(env)
-    if params.install_python_packages:
-      Execute('pip install numpy scipy pandas scikit-learn')
 
     Execute('chown -R ' + params.zeppelin_user + ':' + params.zeppelin_group + ' ' + params.zeppelin_dir)
 
