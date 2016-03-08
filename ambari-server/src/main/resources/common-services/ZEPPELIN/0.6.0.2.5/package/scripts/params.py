@@ -63,15 +63,6 @@ install_python_packages = config['configurations']['zeppelin-env'][
 try:
   fline = open(spark_home + "/RELEASE").readline().rstrip()
   spark_version = re.search('Spark (\d\.\d).+', fline).group(1)
-  print("=================================================")
-  print("=================================================")
-  print("=================================================")
-  print(get_hdp_version('spark-client'))
-  print("=================================================")
-  print(spark_version)
-  print("=================================================")
-  print("=================================================")
-  print("=================================================")
 except:
   pass
 
