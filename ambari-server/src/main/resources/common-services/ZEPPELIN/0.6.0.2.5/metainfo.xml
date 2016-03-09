@@ -42,47 +42,13 @@ limitations under the License.
 
       <osSpecifics>
         <osSpecific>
-          <osFamily>debian7,ubuntu12,ubuntu14</osFamily>
+          <osFamily>any</osFamily>
           <packages>
-            <package>
-              <name>liblapack-dev</name>
-            </package>
-            <package>
-              <name>gfortran</name>
-            </package>
-            <package>
-              <name>python-dev</name>
-            </package>
-            <package>
-              <name>g++</name>
-            </package>
             <package>
               <name>zeppelin</name>
             </package>
           </packages>
         </osSpecific>
-
-        <osSpecific>
-          <osFamily>redhat7,redhat6,redhat5,suse11</osFamily>
-          <packages>
-            <package>
-              <name>gcc-gfortran</name>
-            </package>
-            <package>
-              <name>blas-devel</name>
-            </package>
-            <package>
-              <name>lapack-devel</name>
-            </package>
-            <package>
-              <name>python-devel</name>
-            </package>
-            <package>
-              <name>zeppelin</name>
-            </package>
-          </packages>
-        </osSpecific>
-
       </osSpecifics>
 
       <requiredServices>
